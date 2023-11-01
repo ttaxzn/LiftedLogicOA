@@ -9,12 +9,15 @@ nav{
     align-items: center;
     min-height: 64px;
     position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999999;
 }
 
 .linkWrapper{
     display: flex;
     flex-direction: row;
-    gap: 4em;
+    gap: 7em;
 }
 .navIcon{
     width: 19px;
@@ -32,11 +35,60 @@ a{
     color: rgb(1, 1, 58);
 }
 
-button{
+.signUp{
     width: 170px;
     height: 40px;
     background-color: rgb(171, 248, 168);
     border: 1px solid;
     border-color: rgb(48, 192, 48);
     font-size: .9rem;
+}
+
+.dropBtn{
+    background-color: transparent;
+    border: none;
+    display: none;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%; 
+    right: 0; 
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    width: 100%;
+    z-index: 1; 
+  }
+  
+  .dropdownMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .dropdownMenu a:hover {
+    background-color: #ddd;
+  }
+  
+
+
+
+@media only screen and (max-width: 1200px){
+    .signUp{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1050px){
+    .linkWrapper{
+        display: none;
+    }
+    .navBurger{
+        width: 35px;
+    }
+
+    .dropBtn{
+        display: block;
+    }
 }

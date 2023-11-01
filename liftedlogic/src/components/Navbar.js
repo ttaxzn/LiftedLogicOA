@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Navbar.css";
 import logo from "../assets/Logo-Blue.svg";
 import home from "../assets/nav-icons/Home.svg";
@@ -6,9 +6,37 @@ import record from "../assets/nav-icons/Record.svg";
 import music from "../assets/nav-icons/Music Note.svg";
 import people from "../assets/nav-icons/People.svg"
 import calendar from "../assets/nav-icons/Calendar.svg";
+import burger from "../assets/nav-icons/navburger.svg"
 
 const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation(); 
+    setShowDropdown(!showDropdown);
+  };
+  
+  const handleClickOutside = (e) => {
+    if (showDropdown) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target) && e.target !== dropdownRef.current) {
+        setShowDropdown(false);
+      }
+    }
+  };
+  
+  
+
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  
   return (
+    <>
+   
     <nav>
       <a href="/">
         <img src={logo} />
@@ -16,37 +44,52 @@ const Navbar = () => {
       <div className="linkWrapper"> 
       <a href="/">
         <div className="navIconWrapper">
-        <img src={home} class="navIcon" />
+        <img src={home} className="navIcon" />
         Home
         </div>
       </a>
       <a href="/">
         <div className="navIconWrapper">
-        <img src={record} class="navIcon" />
+        <img src={record} className="navIcon" />
         Records
         </div>
         </a>
       <a href="/">
       <div className="navIconWrapper">
-        <img src={music} class="navIcon" />
+        <img src={music} className="navIcon" />
         Music
         </div>
       </a>
       <a href="/">
       <div className="navIconWrapper">
-        <img src={people} class="navIcon" />
+        <img src={people} className="navIcon" />
         Artists
         </div>
       </a>
       <a href="/">
       <div className="navIconWrapper">
-        <img src={calendar} class="navIcon" />
+        <img src={calendar} className="navIcon" />
         Concerts
         </div>
       </a>
       </div>
-      <button>Sign Up</button>
+      <button className="signUp">Sign Up</button>
+      <button className="dropBtn" onClick={(e) => toggleDropdown(e)}>
+  <img src={burger} className="navBurger" />
+</button>
+
+        {showDropdown && (
+          <div ref={dropdownRef} className="dropdownMenu">
+            <a href="/">Home</a>
+            <a href="/">Records</a>
+            <a href="/">Music</a>
+            <a href="/">Artists</a>
+            <a href="/">Concerts</a>
+            
+          </div>
+        )}
     </nav>
+    </>
   );
 };
 
